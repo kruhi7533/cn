@@ -1,0 +1,37 @@
+Router> enable
+Router# configure terminal
+Router(config)# interface gig0/0
+Router(config-if)# ip address 192.168.1.1 255.255.255.0
+Router(config-if)# ip nat inside
+Router(config-if)# no shutdown
+Router(config-if)# exit
+
+Router(config)# interface gig0/1
+Router(config-if)# ip address 203.0.113.1 255.255.255.0
+Router(config-if)# ip nat outside
+Router(config-if)# no shutdown
+Router(config-if)# exit
+Router(config)# ip nat inside source static 192.168.1.10 203.0.113.5
+
+
+
+
+
+
+Router> enable
+Router# configure terminal
+Router(config)# interface gig0/0
+Router(config-if)# ip address 192.168.1.1 255.255.255.0
+Router(config-if)# ip nat inside
+Router(config-if)# no shutdown
+Router(config-if)# exit
+
+Router(config)# interface gig0/1
+Router(config-if)# ip address 203.0.113.1 255.255.255.0
+Router(config-if)# ip nat outside
+Router(config-if)# no shutdown
+access-list 1 permit 192.168.1.0 0.0.0.255
+ip nat pool MYPOOL 203.0.113.10 203.0.113.20 netmask 255.255.255.0
+ip nat inside source list 1 pool MYPOOL
+
+
