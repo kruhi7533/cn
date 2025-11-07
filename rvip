@@ -1,0 +1,93 @@
+ for router 0
+enable
+configure terminal
+interface fastEthernet0/0
+ ip address 192.168.1.1 255.255.255.0
+ no shutdown
+exit
+interface serial0/0/0
+ ip address 10.0.0.1 255.255.255.252
+ clock rate 64000
+ no shutdown
+exit
+router rip
+version 2
+network 192.168.1.0
+network 10.0.0.0
+no auto-summary
+end
+wr
+----------------------for router1
+enable
+configure terminal
+interface fastEthernet0/0
+ ip address 192.168.2.1 255.255.255.0
+ no shutdown
+exit
+interface serial0/0/0
+ ip address 10.0.0.2 255.255.255.252
+ no shutdown
+exit
+interface serial0/0/1
+ ip address 10.0.0.5 255.255.255.252
+ clock rate 64000
+ no shutdown
+exit
+router rip
+version 2
+network 10.0.0.0
+network 192.168.2.0
+no auto-summary
+end
+wr
+------------------------------for router 2
+
+enable
+configure terminal
+interface fastEthernet0/0
+ ip address 192.168.3.1 255.255.255.0
+ no shutdown
+exit
+interface serial0/0/1
+ ip address 10.0.0.6 255.255.255.252
+ no shutdown
+exit
+router rip
+version 2
+network 10.0.0.0
+network 192.168.3.0
+no auto-summary
+end
+wr
+-----------------------------------on each router  verify
+
+show ip route
+
+----------------------------test connectivity frpm pc0
+ping 192.168.2.10
+ping 192.168.3.10
+
+
+
+
+STEP 8: TEST AUTOMATIC ROUTE UPDATE
+
+To test RIP updating automatically:
+
+On Router1 → shut down Serial0/0/1
+
+conf t
+interface s0/0/1
+shutdown
+
+
+→ Route to 192.168.3.0 disappears automatically.
+
+Turn it back on:
+
+no shutdown
+
+
+→ RIP automatically relearns route after ~30 seconds.
+
+
