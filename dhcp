@@ -13,3 +13,15 @@ Router(dhcp-config)# dns-server 8.8.8.8
 Router(dhcp-config)# exit
 Router(config)# ip dhcp excluded-address 192.168.1.1 192.168.1.10
 (This means DHCP will assign IPs from 192.168.1.11 onward.)
+end
+write
+  till here we will do for both ques
+
+ for ques2
+       enable
+      configure terminal
+      no service dhcp
+      end
+
+// restore dhcp
+Router(config)# service dhcp
