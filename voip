@@ -1,0 +1,33 @@
+enable
+config t
+  interface fa0/0
+    ip address 192.168.1.1 255.255.255.0
+    n0 shutdown
+    ip dhcp pool voip
+    network 192.168.1.0 255.255.255.0
+    default-router 192.168.1.1
+    option 150 ip 192.168.1.1
+    do write
+      ex
+      telephony-service
+      max-ephone 5
+      max-dn 5
+      ip source-address 192.168.1.1 port 2000
+      auto assign 1 to5
+        ephone-dn 1
+        number 155
+
+        do write
+          ex
+
+
+
+        -------------------------switch
+
+          enable
+          config terminal
+            interface range fa0/1-6
+              switchport mode access
+              switchport voice vlan 1
+              do write
+                ex
